@@ -15,9 +15,9 @@
   "author": "Kaelyn Chresfield",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kchresfield/winter-wishlist/issues"
+    "url": "https://github.com/kchresfield/rotary-phone/issues"
   },
-  "homepage": "https://github.com/kchresfield/winter-wishlist#readme",
+  "homepage": "https://github.com/kchresfield/rotary-phone#readme",
   "dependencies": {
     "axios": "1.2.2",
     "body-parser": "1.20.1",
