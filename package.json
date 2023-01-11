@@ -1,7 +1,7 @@
 {
-  "name": "winter-wishlist",
+  "name": "rotary-phone",
   "version": "1.0.0",
-  "description": "A wishlist for the winter!",
+  "description": "Rotary phone for conferences",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kchresfield/winter-wishlist.git"
+    "url": "git+https://github.com/kchresfield/rotary-phone.git"
   },
   "author": "Kaelyn Chresfield",
   "license": "ISC",
