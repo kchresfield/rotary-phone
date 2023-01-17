@@ -1,7 +1,7 @@
 const Router = require('express').Router;
 const express = require('express');
 var bodyParser = require('body-parser')
-const {welcome, menu, recording, hearAMessage, playback} = require('./rotary');
+const {welcome, menu, recording, hearAMessage, playback, text} = require('./rotary');
 
 const app = express();
 const router = new Router();
@@ -29,6 +29,7 @@ router.get('/recording', (req, res) => {
 
 // POST: /rotary-service/playback
 router.post('/playback', (req, res) => {
+  console.log(req.body)
   let digit = req.body.Digits;
   res.send(playback(digit));
 });
@@ -36,6 +37,12 @@ router.post('/playback', (req, res) => {
 // POST: /rotary-service/hearAMessage
 router.post('/hearAMessage', (req, res) => {
   res.send(hearAMessage());
+});
+
+
+router.post('/text', (req, res) => {
+  res.type('text/xml');
+  res.send(text());
 });
 
 module.exports = router;

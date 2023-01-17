@@ -5,6 +5,7 @@ const accountSid = process.env.ACCOUNT_SID;
 const authToken = process.env.AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const axios = require('axios');
 var bodyParser = require('body-parser')
 
@@ -22,9 +23,9 @@ exports.welcome = function welcome() {
 
   gather.say(
     'Thanks for using Twilio\'s rotary phone. ' +
-    'Please press 1 for fun facts. ' +
-    'Press 2 to leave a message. ' +
-    'Press 3 to hear a message. '
+    'Please dial 1 for fun facts. ' +
+    'Dial 2 to leave a message. ' +
+    'Dial 3 to hear a message. '
   );
   return voiceResponse.toString();
 };
@@ -47,8 +48,7 @@ async function sayAFunFact() {
   return await giveAFunFact()
     .then(str => {
       twiml.say(
-        str,
-        { voice: 'alice', language: 'en-GB' }
+        str
       );
     })
     .then(und => {
@@ -86,7 +86,7 @@ async function giveAFunFact() {
 }
 
 function checkForKidUnfriendlyWords(fact) {
-  if (fact.includes("murder") || fact.includes("kill") || fact.includes("suicide") || fact.includes("death") || fact.includes("poison") || fact.includes("overdose") || fact.includes("cocaine")) {
+  if (fact.includes("murder") || fact.includes("kill") || fact.includes("suicide") || fact.includes("death") || fact.includes("poison") || fact.includes("overdose") || fact.includes("cocaine") || fact.includes("cancer") || fact.includes("bullet")) {
     return false;
   }
   return true;
@@ -122,10 +122,6 @@ exports.recording = function recording(digit, url) {
   twiml.gather({
     action: '/rotary-service/playback',
     numDigits: 1
-  });
-
-  twiml.pause({
-    length: 3
   });
 
   return twiml.toString();
@@ -169,7 +165,6 @@ function erase() {
   return twiml.toString();
 
 }
-erase();
 
 async function findAMessage() {
   return client.recordings.list({ limit: 20 })
@@ -194,7 +189,6 @@ function redirectWelcome() {
   const twiml = new VoiceResponse();
 
   twiml.say('Returning to the main menu');
-
   twiml.redirect('/rotary-service/welcome');
 
   return twiml.toString();
@@ -212,3 +206,9 @@ function errorMessage() {
 
   return twiml.toString();
 }
+
+exports.text = function text() {
+  let twiml = new MessagingResponse();
+  twiml.message(`Thanks for attending Twilio's booth! Here's a $10 promocode: ${process.env.PROMO_CODE} and my email if you have any question: kchresfield@twilio.com`);
+  return twiml.toString()
+};
